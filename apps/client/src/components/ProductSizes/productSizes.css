@@ -1,0 +1,13 @@
+.sp-size-container {
+  border: 1px solid black;
+  padding: 2px;
+}
+.sp-size {
+  height: 25px;
+  width: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: gray;
+  font-weight: bold;
+}

@@ -1,0 +1,102 @@
+.cardItems {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  height: 550px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  padding-bottom: 10px;
+}
+.ci-top {
+  flex: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ci-img {
+  height: 350px;
+  width: 100%;
+  background-color: transparent;
+  object-fit: cover;
+  overflow: hidden;
+}
+p {
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+.ci-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: 20px;
+}
+.ci-name {
+  font-weight: bold;
+}
+.ci-shortdesc {
+  margin-top: 10px;
+  color: gray;
+  font-weight: 500;
+}
+.ci-size {
+  font-weight: 500;
+  color: gray;
+}
+.ci-select {
+  padding: 4px;
+  outline: none;
+}
+.ci-color-name {
+  font-weight: 500;
+  color: gray;
+  margin-bottom: 10px;
+}
+.ci-options-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ci-color-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ci-color {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.ci-active {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+}
+.ci-price-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.ci-icon {
+  height: 15px;
+  width: 15px;
+}
+.ci-price {
+  font-weight: bold;
+  font-size: 18px;
+}
+.ci-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgb(225, 225, 225);
+  border-radius: 5px;
+  padding: 6px;
+  font-weight: bold;
+  background-color: transparent;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}

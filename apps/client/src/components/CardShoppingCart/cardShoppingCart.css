@@ -1,0 +1,57 @@
+.cdc {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.cdc-img {
+  height: 100px;
+  width: 100px;
+  object-fit: contain;
+  width: 100%;
+}
+.cdc-left {
+  flex: 1;
+}
+.cdc-right {
+  flex: 3;
+  height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cdc-title {
+  display: block;
+  padding: 0;
+  font-weight: bold;
+  font-size: 12px;
+}
+.cdc-detail {
+  display: block;
+  padding: 0;
+  font-weight: 500;
+  font-size: 12px;
+  color: gray;
+}
+.cdc-price {
+  display: block;
+  padding: 0;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.cdc-delete-btn {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: pink;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cdc-icon {
+  height: 15px;
+}

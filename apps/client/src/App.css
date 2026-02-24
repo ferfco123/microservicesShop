@@ -1,0 +1,25 @@
+.app {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+
+  max-width: 36rem;
+}
+
+@media screen and (min-width: 768px) {
+  .app {
+    max-width: 42rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .app {
+    max-width: 48rem;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .app {
+    max-width: 72rem;
+  }
+}

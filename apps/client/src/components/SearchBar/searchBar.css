@@ -1,0 +1,19 @@
+.searchBar {
+  border: 1px solid gray;
+  border-radius: 20px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sb-icon {
+  height: 15px;
+  width: 15px;
+  color: gray;
+}
+.sb-input {
+  border: none;
+}
+.sb-input:focus {
+  outline: none;
+}

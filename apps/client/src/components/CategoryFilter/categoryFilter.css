@@ -1,0 +1,27 @@
+.cf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px;
+  background-color: rgb(241, 241, 241);
+  border-radius: 10px;
+}
+.cf-item {
+  width: 130px;
+  padding: 3px;
+  border-radius: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  color: gray;
+}
+.cf-active {
+  background-color: white;
+}
+.cf-icon {
+  height: 15px;
+  width: 15px;
+}

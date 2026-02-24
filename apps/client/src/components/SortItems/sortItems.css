@@ -1,0 +1,20 @@
+.sortItems {
+  margin-left: auto;
+  margin-top: 20px;
+  width: max-content;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.sortItems-title {
+  font-weight: 500;
+}
+.sortItems-select {
+  font-weight: bold;
+  outline: none;
+  padding: 5px;
+  border-radius: 5px;
+}
+.sortItmes-option {
+  font-weight: bold;
+}

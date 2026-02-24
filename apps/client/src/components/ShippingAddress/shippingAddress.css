@@ -1,0 +1,24 @@
+.shoppingAddress {
+  width: 90%;
+  border-radius: 5px;
+
+  box-shadow:
+    0 -1px 2px rgba(0, 0, 0, 0.04),
+    0 8px 16px rgba(0, 0, 0, 0.08);
+
+  padding: 15px;
+  height: max-content;
+}
+.shoppingAddress-title {
+  padding: 0;
+  margin-bottom: 20px;
+}
+.shoppingAddress-space {
+  margin-bottom: 30px;
+}
+
+@media screen and (min-width: 1024px) {
+  .shoppingAddress {
+    width: 50%;
+  }
+}

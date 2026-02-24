@@ -1,0 +1,22 @@
+.inputForm {
+  border-bottom: 1px solid gray;
+  margin-bottom: 10px;
+  position: relative;
+}
+.inputForm-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: gray;
+}
+.inputForm-input {
+  border: none;
+  padding: 5px;
+  outline: none;
+}
+.inputForm-error {
+  font-size: 12px;
+  color: red;
+  font-style: italic;
+  position: absolute;
+  bottom: -10px;
+}

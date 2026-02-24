@@ -1,0 +1,18 @@
+.button-continue {
+  width: 100%;
+  padding: 5px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.button-icon {
+  width: 15px;
+}

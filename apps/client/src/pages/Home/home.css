@@ -1,0 +1,25 @@
+.home {
+  /* height: calc(100vh - 156px); */
+}
+.home-image {
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: 3/1;
+  margin-bottom: 20px;
+}
+
+.home-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.home-link {
+  display: block;
+  width: max-content;
+
+  text-decoration: none;
+  color: inherit;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+}
