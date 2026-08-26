@@ -6,13 +6,17 @@ const CategoryFilter = ({
   searchParams,
   setSearchParams,
 }: CategoryFilterProps) => {
-  const active: string = searchParams.get("cat") || "all";
+  const active: string = searchParams.get("category") || "all";
 
   const handleClick = (item: string) => {
     const params = new URLSearchParams(searchParams);
 
-    params.set("cat", item.toLowerCase());
-    params.set("sort", "Newest");
+    params.set("category", item.toLowerCase());
+    if (params.get("category") !== "all") {
+      params.set("sort", "Newest");
+    } else {
+      params.delete("sort");
+    }
 
     setSearchParams(params);
   };

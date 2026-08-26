@@ -1,0 +1,27 @@
+{
+  "name": "@repo/orderdb",
+  "version": "1.0.0",
+  "description": "Base de datos MongoDB con Mongoose para el servicio de órdenes",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "node -e \"fs.rmSync('dist', { recursive: true, force: true })\""
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "mongoose": "^8.23.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^25.3.2",
+    "typescript": "^5.9.2"
+  }
+}

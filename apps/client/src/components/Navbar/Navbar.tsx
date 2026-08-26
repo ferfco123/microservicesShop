@@ -1,22 +1,29 @@
-import { Bell, House, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import SearchBar from "../SearchBar/SearchBar";
 import "./navbar.css";
 import { Link } from "react-router-dom";
 import useCart from "../../Zustand/useCart";
 
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+} from "@clerk/clerk-react";
+import ProfileButton from "../ProfileButton/ProfileButton";
 const Navbar = () => {
   const { cart } = useCart();
-  const totalItems = cart.reduce((accum, item) => {
+  const cartItems = Object.values(cart);
+  const totalItems = cartItems.reduce((accum, item) => {
     return accum + item.quantity;
   }, 0);
   return (
     <div className="navbar">
-      <div className="navbar-left">
-        <Link to="/" className="navbar-left">
-          <img src="/logo.png" alt="" className="navbar-logo" />
-        </Link>
+      <Link to="/" className="navbar-left">
+        <img src="/logo.png" alt="" className="navbar-logo" />
+
         <p className="navbar-title">FERFCO SHOP</p>
-      </div>
+      </Link>
       <div className="navbar-rigth">
         <SearchBar />
         <div className="navbar-icons-container">
@@ -25,7 +32,39 @@ const Navbar = () => {
             <ShoppingCart className="navbar-icon" />
           </Link>
         </div>
-        <button className="navbar-btn">Sign In</button>
+
+        <SignedOut>
+          <SignInButton>
+            <div
+              style={{
+                padding: "5px",
+                border: "1px solid gray",
+                borderRadius: "10px",
+                fontSize: "14px",
+                cursor: "pointer",
+              }}
+            >
+              Sign In
+            </div>
+          </SignInButton>
+
+          <SignUpButton>
+            <div
+              style={{
+                padding: "5px",
+                border: "1px solid gray",
+                borderRadius: "10px",
+                fontSize: "14px",
+                cursor: "pointer",
+              }}
+            >
+              Sign Up
+            </div>
+          </SignUpButton>
+        </SignedOut>
+        <SignedIn>
+          <ProfileButton />
+        </SignedIn>
       </div>
     </div>
   );

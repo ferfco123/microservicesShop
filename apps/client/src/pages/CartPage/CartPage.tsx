@@ -3,53 +3,41 @@ import CartDetails from "../../components/CartDetails/CartDetails";
 import CartItemsContainer from "../../components/CartItemsContainer/CartItemsContainer";
 import CartSteps from "../../components/CartSteps/CartSteps";
 import "./cartPage.css";
-import ShoppingAddress from "../../components/ShippingAddress/ShippingAddress";
-import type { ShippingAddressForm } from "../../components/ShippingAddress/shippingAddress.schema";
-import PaymentForm from "../../components/PaymentForm/PaymentForm";
-import ShippingAddress from "../../components/ShippingAddress/ShippingAddress";
+
 import useCart from "../../Zustand/useCart";
+import StripePaymentForm from "../../components/stripePaymentForm/StripePaymentForm";
+import type { cartItemsType } from "@repo/types";
+import { useNavigate } from "react-router";
 
 const CartPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [userData, setUserData] = useState<Record<string, string | number>>({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    cardHolder: "",
-    cardNumber: "",
-    expirationDate: "",
-  });
-  const { cart } = useCart();
 
+  const { cart } = useCart();
+  const cartItems: cartItemsType = Object.values(cart);
   const stepsArray: JSX.Element[] = [
-    <CartItemsContainer cart={cart} />,
-    <ShippingAddress
-      userData={userData}
-      setUserData={setUserData}
-      setCurrentStep={setCurrentStep}
-    />,
-    <PaymentForm userData={userData} setUserData={setUserData} />,
+    <CartItemsContainer cart={cartItems} />,
+
+    <StripePaymentForm />,
   ];
-  const totalPrice = cart.reduce((acumm, item): number => {
-    const price = item.price * item.quantity;
+  const totalPrice = cartItems.reduce((acumm, item): number => {
+    const price = (item.price as number) * item.quantity;
     return acumm + price;
   }, 0);
-
+  const navigate = useNavigate();
   return (
     <div className="cartPage">
       <div className="cartPage-steps-wrapper">
-        <h3>Your shopping cart</h3>
+        <div className="cartPage-title-container">
+          <button className="cartPage-Back" onClick={() => navigate(-1)}>
+            Back
+          </button>
+          <h3 className="cartPage-title">Your shopping cart</h3>
+        </div>
         <div className="cartPage-steps-container">
           <CartSteps step={1} title="Shopping Cart" currentStep={currentStep} />
+
           <CartSteps
             step={2}
-            title="Shopping Address"
-            currentStep={currentStep}
-          />
-          <CartSteps
-            step={3}
             title="Payment method"
             currentStep={currentStep}
           />

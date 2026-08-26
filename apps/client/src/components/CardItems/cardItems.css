@@ -16,7 +16,7 @@
   height: 350px;
   width: 100%;
   background-color: transparent;
-  object-fit: cover;
+  object-fit: contain;
   overflow: hidden;
 }
 p {
@@ -44,8 +44,10 @@ p {
   color: gray;
 }
 .ci-select {
+  border: 1px solid black;
   padding: 4px;
   outline: none;
+  margin-bottom: 10px;
 }
 .ci-color-name {
   font-weight: 500;

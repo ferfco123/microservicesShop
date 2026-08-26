@@ -1,61 +1,64 @@
+import type { cartItemType, zustandCartItemsType } from "@repo/types";
 import { create } from "zustand";
 
 import { persist } from "zustand/middleware";
 
-export type CartProduct = {
-  quantity: number;
-  size: string;
-  color: string;
-  id: string;
-  name: string;
-  price: number;
-  img: string;
-};
-export type CartProductsType = CartProduct[];
-
 type cartStore = {
-  cart: CartProductsType;
-  addToCart: (product: CartProduct) => void;
-  removeFromCart: (product: CartProduct) => void;
+  cart: zustandCartItemsType;
+  addToCart: (product: cartItemType) => void;
+  removeFromCart: (product: cartItemType) => void;
   resetCart: () => void;
 };
 
 const useCart = create<cartStore>()(
   persist(
     (set) => ({
-      cart: [],
-      addToCart: (product: CartProduct) => {
-        set((state) => {
-          const existingProduct = state.cart.find(
-            (p) =>
-              p.id === product.id &&
-              p.color === product.color &&
-              p.size === product.size,
-          );
-          if (existingProduct) {
-            const total = existingProduct.quantity;
-            existingProduct.quantity = total + product.quantity;
-            return { cart: [...state.cart] };
+      cart: {},
+
+      addToCart: (product: cartItemType) => {
+        set((state: cartStore) => {
+          const key: string =
+            product.id +
+            "_" +
+            "size:" +
+            product.selectedSize +
+            "_" +
+            "selectedColor:" +
+            product.selectedColor;
+
+          if (!state.cart[key]) {
+            const newProduct = {
+              ...product,
+
+              key,
+            };
+
+            return { cart: { ...state.cart, [key]: newProduct } };
           } else {
-            return { cart: [...state.cart, product] };
+            const currentQuantity = state.cart[key].quantity;
+            const newQuantity = currentQuantity + product.quantity;
+            const newProduct = {
+              ...state.cart[key],
+              quantity: newQuantity,
+              key,
+            };
+            return { cart: { ...state.cart, [key]: newProduct } };
           }
         });
       },
-      removeFromCart: (product) =>
-        set((state) => {
-          const itemToDelete = state.cart.findIndex(
-            (p) =>
-              p.id === product.id &&
-              p.size === product.size &&
-              p.color === product.color,
-          );
-          if (itemToDelete === -1) return state;
-          const newArray = structuredClone(state.cart);
-          newArray.splice(itemToDelete, 1);
-          console.log("new", newArray);
-          return { cart: [...newArray] };
+      removeFromCart: (product: cartItemType) =>
+        set((state: cartStore) => {
+          if (product.key) {
+            const key = product.key;
+
+            const { [key]: _, ...others } = state.cart;
+
+            return { cart: others };
+          } else {
+            return { cart: state.cart };
+          }
         }),
-      resetCart: () => set({ cart: [] }),
+      resetCart: () => set({ cart: {} }),
     }),
     {
       name: "cart-storage",

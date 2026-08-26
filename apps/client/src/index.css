@@ -8,3 +8,14 @@ body {
   margin: 0;
   padding: 0;
 }
+a {
+  color: inherit;
+  text-decoration: none;
+}
+@media screen and (max-width: 768px) {
+  .my-toast-container {
+    bottom: 40px !important;
+    max-width: 320px !important;
+    left: auto !important;
+  }
+}

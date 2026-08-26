@@ -1,60 +1,60 @@
 import { useState } from "react";
 import "./cardItems.css";
-import type { productType } from "./types.categoryItems";
 import { ShoppingCart } from "lucide-react";
 import useCart from "../../Zustand/useCart";
 import { toast } from "react-toastify";
 import { Link } from "react-router";
+import type { cartItemType, ProductType } from "@repo/types";
 
-type product = {
-  product: productType;
-};
-type CartProduct = {
-  id: string;
-  size: string;
-  color: string;
-  quantity: number;
-  price: number;
-  img: string;
-  name: string;
-};
-const CardItems = ({ product }: product) => {
-  const [filters, setFilters] = useState<CartProduct>({
+const CardItems = ({ product }: { product: ProductType }) => {
+  const [filters, setFilters] = useState<cartItemType>({
     name: product.name,
-    size: product.sizes[0],
-    color: product.colors[0],
+    sizes: product.sizes,
+    colors: product.colors,
     id: product.id,
     quantity: 1,
     price: product.price,
-    img: "",
   });
   const { addToCart } = useCart();
 
   const handleFilters = (type: string, value: string) => {
     setFilters((prev) => {
+      const newColor =
+        type === "color" ? value : (prev.selectedColor ?? product.colors[0]);
+      const newSize =
+        type === "size" ? value : (prev.selectedSize ?? product.sizes[0]);
+      const images = product.images as Record<string, string>;
       return {
         ...prev,
-        [type]: value,
-        color: type === "color" ? value : prev.color,
+        selectedSize: newSize,
+        selectedColor: newColor,
         id: product.id,
-        img: product.images[filters.color],
+        img: images[newColor],
       };
     });
   };
 
   const handleClick = () => {
-    const img = product.images[filters.color];
+    const images = product.images as Record<string, string>;
+    const img = filters.selectedColor
+      ? images[filters.selectedColor]
+      : images[product.colors[0]];
 
     setFilters((prev) => ({ ...prev, img }));
     addToCart({ ...filters, quantity: 1, img: img });
-    toast.success("Products added to cart");
+    toast.success("Product added to cart");
   };
+  const images = product.images as Record<string, string>;
 
   return (
-    <Link to={`/singleProduct/${product.id}`} className="cardItems">
-      <div className="ci-top">
-        <img src={product.images[filters.color]} alt="" className="ci-img" />
-      </div>
+    <div className="cardItems">
+      <Link to={`/singleProduct/${product.id}`} className="ci-top">
+        <img
+          src={images[filters.selectedColor ?? product.colors[0]]}
+          alt=""
+          className="ci-img"
+        />
+      </Link>
       <div className="ci-bottom">
         <p className="ci-name">{product.name}</p>
         <p className="ci-shortdesc">{product.shortDescription}</p>
@@ -81,7 +81,7 @@ const CardItems = ({ product }: product) => {
                   <div
                     key={color}
                     style={
-                      filters.color === color
+                      filters.selectedColor === color
                         ? {
                             height: "18px",
                             width: "18px",
@@ -113,7 +113,7 @@ const CardItems = ({ product }: product) => {
           </button>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

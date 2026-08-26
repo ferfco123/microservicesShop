@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "paths": {
+      "@repo/types": ["../../packages/types/src/index.ts"],
+      "@repo/types/*": ["../../packages/types/src/*"]
+    },
+    "noEmit": true
+  },
+  "include": ["src", "../../packages/types/src"],
+  "exclude": ["node_modules"]
+}

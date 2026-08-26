@@ -1,0 +1,41 @@
+{
+  "name": "product-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsx watch --env-file=../../.env src/config/server.ts",
+    "check-types": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@clerk/express": "^1.7.74",
+    "@prisma/client": "latest",
+    "@repo/kafka": "workspace:*",
+    "@repo/productdb": "workspace:*",
+    "@repo/types": "workspace:*",
+    "cors": "^2.8.6",
+    "dotenv": "^16.0.3",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.3.0",
+    "@types/supertest": "^7.2.0",
+    "@vitest/coverage-v8": "^4.0.18",
+    "supertest": "^7.2.2",
+    "tsx": "^4.21.0",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.0.18",
+    "vitest-mock-extended": "^3.1.0"
+  }
+}

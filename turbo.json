@@ -1,20 +1,51 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
+  "globalEnv": [
+    "CLERK_PUBLISHABLE_KEY",
+    "CLERK_SECRET_KEY",
+    "STRIPE_SECRET_KEY",
+    "STRIPE_WEBHOOK_SECRET",
+    "DATABASE_URL",
+    "PORT",
+    "NODE_ENV"
+  ],
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "db:generate"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", ".next/**", "build/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "dependsOn": ["^build", "^check-types"]
+    },
+    "test": {
+      "dependsOn": ["^build", "db:generate"],
+      "cache": true,
+      "inputs": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.test.ts"]
     },
     "dev": {
+      "dependsOn": ["^build", "db:generate"],
+      "cache": false,
+      "persistent": true
+    },
+    "db:generate": {
+      "cache": false,
+      "inputs": ["$TURBO_DEFAULT$", ".env*", "prisma/schema.prisma"]
+    },
+    "db:migrate": {
+      "cache": false,
+      "persistent": false,
+      "inputs": ["$TURBO_DEFAULT$", ".env*", "prisma/schema.prisma"]
+    },
+    "db:deploy": {
+      "cache": false,
+      "inputs": ["$TURBO_DEFAULT$", ".env*", "prisma/schema.prisma"]
+    },
+    "db:studio": {
       "cache": false,
       "persistent": true
     }

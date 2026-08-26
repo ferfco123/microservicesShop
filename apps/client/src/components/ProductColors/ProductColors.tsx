@@ -9,7 +9,7 @@ const ProductColors = ({
   colors: string[];
   colorActive: string | undefined;
   setColorActive: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setImg: React.Dispatch<React.SetStateAction<string>>;
+  setImg: React.Dispatch<React.SetStateAction<string | undefined>>;
 }) => {
   return (
     <div className="sp-sizes">

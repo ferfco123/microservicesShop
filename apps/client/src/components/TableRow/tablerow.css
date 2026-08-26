@@ -1,0 +1,11 @@
+.row {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  height: 50px;
+  background-color: #eaf7ea;
+}
+td {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}

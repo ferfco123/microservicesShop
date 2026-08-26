@@ -1,10 +1,27 @@
 .sortItems {
-  margin-left: auto;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
   margin-top: 20px;
-  width: max-content;
+
   display: flex;
   gap: 20px;
   align-items: center;
+}
+.si-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.si-btn {
+  padding: 7px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
 }
 .sortItems-title {
   font-weight: 500;

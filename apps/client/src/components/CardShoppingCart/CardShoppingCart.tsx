@@ -1,19 +1,11 @@
 import { Trash2 } from "lucide-react";
 import "./cardShoppingCart.css";
 import useCart from "../../Zustand/useCart";
+import type { cartItemType } from "@repo/types";
 
-type Product = {
-  id: string;
-  size: string;
-  color: string;
-  quantity: number;
-  price: number;
-  img: string;
-  name: string;
-};
-const CardShoppingCart = ({ product }: { product: Product }) => {
+const CardShoppingCart = ({ product }: { product: cartItemType }) => {
   const { removeFromCart } = useCart();
-  console.log("product", product);
+
   return (
     <div className="cdc">
       <div className="cdc-left">
@@ -23,10 +15,10 @@ const CardShoppingCart = ({ product }: { product: Product }) => {
         <div className="cdc-details">
           <p className="cdc-title">{product.name}</p>
           <p className="cdc-detail">Quantity {product.quantity}</p>
-          <p className="cdc-detail">Size {product.size}</p>
-          <p className="cdc-detail">Color {product.color}</p>
+          <p className="cdc-detail">Size {product.selectedSize}</p>
+          <p className="cdc-detail">Color {product.selectedColor}</p>
         </div>
-        <div className="cdc-price">$ {product.price.toFixed(2)}</div>
+        <div className="cdc-price">$ {product.price?.toFixed(2)}</div>
       </div>
 
       <div className="cdc-delete-btn" onClick={() => removeFromCart(product)}>

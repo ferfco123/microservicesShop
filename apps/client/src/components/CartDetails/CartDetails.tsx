@@ -1,5 +1,6 @@
 import { MoveRight } from "lucide-react";
 import "./cartDetails.css";
+import useCart from "../../Zustand/useCart";
 
 type CartStepsProps = {
   currentStep: number;
@@ -11,8 +12,9 @@ const CartDetails = ({
   setCurrentStep,
   totalPrice,
 }: CartStepsProps) => {
+  const { cart } = useCart();
   const handleClick = (): void => {
-    setCurrentStep(1);
+    if (Object.values(cart).length > 0) setCurrentStep(1);
   };
   return (
     <div className="cartDetails">

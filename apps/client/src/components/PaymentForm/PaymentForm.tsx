@@ -5,10 +5,7 @@ import "./paymentForm.css";
 import { FormProvider, useForm, type SubmitHandler } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  PaymentFormSchema,
-  type PaymentFormInputs,
-} from "./paymentForm.schema";
+import { PaymentFormSchema, type PaymentFormInputs } from "@repo/types";
 
 type PaymentFormType = {
   userData: Record<string, string | number>;

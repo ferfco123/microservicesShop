@@ -16,7 +16,7 @@ type itemsType = itemType[];
 
 export const categoryItems: itemsType = [
   { title: "All", icon: ShoppingBasket },
-  { title: "T-Shirts", icon: Shirt },
+  { title: "T-Shirt", icon: Shirt },
 
   { title: "Shoes", icon: Footprints },
 
@@ -36,13 +36,13 @@ type productType = {
   shortDescription: string;
   description: string;
   price: number;
-  sizes: string[];
-  colors: string[];
+  sizes: [string, ...string[]];
+  colors: [string, ...string[]];
   images: Record<string, string>;
 };
 export type productsType = productType[];
 
-export const products: productsType = [
+export const products: any = [
   {
     id: "rxytd ga",
     name: "product1111",
@@ -53,6 +53,9 @@ export const products: productsType = [
     sizes: ["s", "m", "l", "xl"],
     colors: ["gray", "purple", "green"],
     images: { gray: "/1g.png", purple: "/1p.png", green: "/1gr.png" },
+    categorySlug: "t-shirt",
+    createdAt: "ggggg",
+    updatedAt: "eeeee",
   },
   {
     id: "rxytd gs",
@@ -64,6 +67,9 @@ export const products: productsType = [
     sizes: ["s", "m", "l", "xl"],
     colors: ["gray", "green"],
     images: { gray: "/2g.png", green: "/2gr.png" },
+    categorySlug: "t-shirt",
+    createdAt: "ggggg",
+    updatedAt: "eeeee",
   },
   {
     id: "rxytd gd",
@@ -75,6 +81,9 @@ export const products: productsType = [
     sizes: ["s", "m", "l", "xl"],
     colors: ["gray", "blue", "green"],
     images: { gray: "/3b.png", blue: "/3bl.png", green: "/3gr.png" },
+    categorySlug: "t-shirt",
+    createdAt: "ggggg",
+    updatedAt: "eeeee",
   },
   {
     id: "rxytd gf",
@@ -86,6 +95,9 @@ export const products: productsType = [
     sizes: ["s", "m", "l", "xl"],
     colors: ["gray", "purple", "green"],
     images: { gray: "/1g.png", purple: "/1p.png", green: "/1gr.png" },
+    categorySlug: "t-shirt",
+    createdAt: "ggggg",
+    updatedAt: "eeeee",
   },
   {
     id: "rxytd gg",
@@ -97,6 +109,9 @@ export const products: productsType = [
     sizes: ["s", "m", "l", "xl"],
     colors: ["gray", "green"],
     images: { gray: "/2g.png", green: "/gr.png" },
+    categorySlug: "t-shirt",
+    createdAt: "ggggg",
+    updatedAt: "eeeee",
   },
   {
     id: "rxytd gh",
@@ -108,5 +123,8 @@ export const products: productsType = [
     sizes: ["s", "m", "l", "xl"],
     colors: ["gray", "blue", "green"],
     images: { gray: "/3b.png", blue: "/3bl.png", green: "/3gr.png" },
+    categorySlug: "t-shirt",
+    createdAt: "ggggg",
+    updatedAt: "eeeee",
   },
 ];

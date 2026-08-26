@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@prisma/client": [
+        "../../node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2/node_modules/@prisma/client"
+      ]
+    }
+  },
+  "include": ["src/**/*"]
+}

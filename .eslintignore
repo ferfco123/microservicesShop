@@ -1,0 +1,5 @@
+# Ignorar todos los archivos .prisma
+**/*.prisma
+
+# También opcional: ignorar carpetas generadas
+**/generated/

@@ -1,0 +1,39 @@
+{
+  "name": "order-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsx watch src/config/server.ts",
+    "check-types": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@stripe/cli": "^1.50.1",
+    "@types/cors": "^2.8.19",
+    "@types/node": "^25.3.0",
+    "@types/node-cron": "^3.0.11",
+    "@vitest/coverage-v8": "^4.0.18",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.2",
+    "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "@clerk/fastify": "^2.6.26",
+    "@fastify/cors": "^11.3.0",
+    "@repo/kafka": "workspace:*",
+    "@repo/orderdb": "workspace:*",
+    "@repo/productdb": "workspace:*",
+    "@repo/types": "workspace:*",
+    "cors": "^2.8.6",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.4.2",
+    "fastify": "^5.7.4",
+    "node-cron": "^4.6.0"
+  }
+}

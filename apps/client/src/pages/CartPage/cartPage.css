@@ -3,7 +3,26 @@
   align-items: center;
   flex-direction: column;
 }
-
+.cartPage-title-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+.cartPage-Back {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 7px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100px;
+  justify-self: start;
+}
+.cartPage-title {
+  grid-column: 2;
+}
 .cartPage-steps-container {
   display: flex;
 

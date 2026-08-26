@@ -1,31 +1,40 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import "./singleProduct.css";
-import { products } from "../Home/data.home";
 import { useEffect, useState } from "react";
 import QuantityCounter from "../../components/QuantityCounter/QuantityCounter";
 import ProductSizes from "../../components/ProductSizes/ProductSizes";
 import ProductColors from "../../components/ProductColors/ProductColors";
 import useCart from "../../Zustand/useCart";
 import { toast } from "react-toastify";
-type CartProduct = {
-  id: string;
-  size: string;
-  color: string;
-  quantity: number;
-  price: number;
-  img: string;
-  name: string;
-};
+import { useQuery } from "@tanstack/react-query";
+import type { cartItemType, ProductType } from "@repo/types";
+import { apiProductsPublic } from "../../api/api";
+
 const SingleProduct = () => {
   const { id } = useParams();
-  const product = products.find((p) => p.id === id);
-  const [sizeActive, setSizeActive] = useState(product?.sizes[0] ?? "");
-  const [colorActive, setColorActive] = useState<string>(
-    product?.colors[0] ?? "",
-  );
-  if (!product) return;
+  const navigate = useNavigate();
+  const {
+    data: product,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["product", id],
+    queryFn: async (): Promise<ProductType> => {
+      const res = await apiProductsPublic.get(`/products/singleProduct/${id}`);
+      return res.data;
+    },
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 10,
+  });
+  const [sizeActive, setSizeActive] = useState<string | undefined>(undefined);
+  const [colorActive, setColorActive] = useState<string | undefined>(undefined);
+
+  const images =
+    typeof product?.images === "object" && product?.images !== null
+      ? (product.images as Record<string, string>)
+      : undefined;
   const [quantity, setQuantity] = useState(1);
-  const [img, setImg] = useState("gray");
+  const [img, setImg] = useState<string | undefined>(undefined);
   const { addToCart } = useCart();
 
   const handleQuantity = (action: string) => {
@@ -35,27 +44,58 @@ const SingleProduct = () => {
       setQuantity((prev) => prev + 1);
     }
   };
+
   useEffect(() => {
-    document.title = product.name;
-  }, []);
+    if (product) {
+      document.title = product.name;
+      if (!colorActive && product.colors?.length > 0) {
+        const defaultColor = product.colors[0];
+        setColorActive(defaultColor);
+
+        if (images && images[defaultColor]) {
+          setImg(defaultColor);
+        }
+      }
+      if (!sizeActive && product.sizes?.length > 0) {
+        setSizeActive(product.sizes[0]);
+      }
+    }
+  }, [product, colorActive, sizeActive, images]);
+
   const handleCart = () => {
-    const cartProduct: CartProduct = {
-      name: product.name,
-      id: product.id,
+    const cartProduct: cartItemType = {
+      name: product?.name,
+      id: Number(product?.id),
       quantity,
-      price: product.price,
-      img: product.images[img],
-      color: colorActive,
-      size: sizeActive,
+      price: product?.price,
+      img: product?.images
+        ? product.images[img as keyof typeof product.images]
+        : undefined,
+      selectedColor: colorActive,
+      selectedSize: sizeActive,
     };
     addToCart(cartProduct);
     toast.success("product added to cart");
   };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Something went wrong</div>;
+  }
 
   return (
     <div className="singleProduct">
       <div className="sp-top">
-        <img src={product?.images[img]} alt="" className="sp-img" />
+        <img
+          src={
+            product?.images
+              ? product.images[img as keyof typeof product.images]
+              : undefined
+          }
+          alt=""
+          className="sp-img"
+        />
       </div>
       <div className="sp-bottom">
         <h4>{product?.name}</h4>
@@ -63,19 +103,24 @@ const SingleProduct = () => {
         <div className="sp-price">$ {product?.price.toFixed(2)}</div>
         <div className="sp-option">Size</div>
 
-        <ProductSizes
-          sizes={product?.sizes}
-          sizeActive={sizeActive}
-          setSizeActive={setSizeActive}
-        />
+        {product && (
+          <ProductSizes
+            sizes={product?.sizes}
+            sizeActive={sizeActive}
+            setSizeActive={setSizeActive}
+          />
+        )}
+
         <div className="sp-option">color</div>
 
-        <ProductColors
-          colors={product.colors}
-          colorActive={colorActive}
-          setColorActive={setColorActive}
-          setImg={setImg}
-        />
+        {product && (
+          <ProductColors
+            colors={product?.colors}
+            colorActive={colorActive}
+            setColorActive={setColorActive}
+            setImg={setImg}
+          />
+        )}
         <div className="sp-option">quantity</div>
         <QuantityCounter quantity={quantity} handleQuantity={handleQuantity} />
 
@@ -83,7 +128,9 @@ const SingleProduct = () => {
           <button className="sp-btn" onClick={handleCart}>
             Add to cart
           </button>
-          <button className="sp-btn-buy">By this now</button>
+          <button className="sp-btn-buy" onClick={() => navigate(-1)}>
+            Back
+          </button>
           <div>
             <div className="sp-img-container">
               <img src="/klarna.png" alt="" className="sp-img-card" />
