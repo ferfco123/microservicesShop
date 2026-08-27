@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 
 import { prisma, Prisma } from "@repo/productdb";
 import { producer } from "../utils/kafka.js";
-import { stripeProductType } from "@repo/types";
+
+import type { stripeProductType } from "@repo/types/product";
 
 export const createProduct = async (req: Request, res: Response) => {
   const data: any = req.body;
@@ -145,9 +146,9 @@ export const deleteProduct = async (req: Request, res: Response) => {
       },
     });
 
-    // await producer.send("product.deletedMany", {
-    //   value: JSON.stringify({ ids: numericIds, count: result.count }),
-    // });
+    await producer.send("product.deletedMany", {
+      value: JSON.stringify({ ids: numericIds, count: result.count }),
+    });
 
     return res.status(200).json({
       message: `${result.count} product(s) deleted successfully`,
