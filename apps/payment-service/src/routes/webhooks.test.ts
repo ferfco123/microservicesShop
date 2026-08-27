@@ -9,15 +9,30 @@ import app from "../index.js";
 vi.mock("@repo/paymentdb", () => ({
   prisma: {
     order: {
-      create: vi.fn().mockResolvedValue({ id: 1 }),
+      create: vi.fn().mockResolvedValue({ id: 1, userId: "user_123" }),
       update: vi.fn().mockResolvedValue({ id: 1 }),
       findUnique: vi.fn().mockResolvedValue(null),
       findFirst: vi.fn().mockResolvedValue(null),
+      upsert: vi.fn().mockResolvedValue({ id: 1 }),
     },
     payment: {
       create: vi.fn().mockResolvedValue({ id: 1 }),
       update: vi.fn().mockResolvedValue({ id: 1 }),
+      findUnique: vi.fn().mockResolvedValue(null),
     },
+    // Añadimos un Proxy genérico por si el controlador usa otro modelo o método
+    $transaction: vi.fn((callback) =>
+      callback({
+        order: {
+          create: vi.fn().mockResolvedValue({ id: 1 }),
+          update: vi.fn().mockResolvedValue({ id: 1 }),
+        },
+        payment: {
+          create: vi.fn().mockResolvedValue({ id: 1 }),
+          update: vi.fn().mockResolvedValue({ id: 1 }),
+        },
+      }),
+    ),
   },
 }));
 vi.mock("../utils/stripe.js", () => ({
