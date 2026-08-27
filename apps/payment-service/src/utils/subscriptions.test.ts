@@ -18,16 +18,36 @@ describe("Kafka Subscriptions", () => {
   it("Debería registrar los suscriptores y procesar mensajes (100% Coverage)", async () => {
     await runKafkaSubscriptions();
 
-    const createCallback = (consumer.subscribe as any).mock.calls[0][1];
+    // Verificamos que se haya llamado a subscribe con el array de configuraciones
+    expect(consumer.subscribe).toHaveBeenCalledTimes(1);
 
-    const deleteCallback = (consumer.subscribe as any).mock.calls[1][1];
+    const subscriptions = (consumer.subscribe as any).mock.calls[0][0];
 
-    const mockProduct = { value: { id: "123", name: "Notebook" } };
-    await createCallback(mockProduct);
-    expect(createStripeProduct).toHaveBeenCalledWith(mockProduct.value);
+    // Extraemos los handlers de product.created y product.deleted
+    const createdSub = subscriptions.find(
+      (s: any) => s.topicName === "product.created",
+    );
+    const deletedSub = subscriptions.find(
+      (s: any) => s.topicName === "product.deleted",
+    );
 
-    const mockId = { value: "123" };
-    await deleteCallback(mockId);
-    expect(deleteStripeProduct).toHaveBeenCalledWith(mockId.value);
+    expect(createdSub).toBeDefined();
+    expect(deletedSub).toBeDefined();
+
+    // 1. Test handler de product.created (Caso exitoso)
+    const mockProduct = { id: "123", name: "Notebook" };
+    await createdSub.topicHandler({ value: mockProduct });
+    expect(createStripeProduct).toHaveBeenCalledWith(mockProduct);
+
+    // 2. Test handler de product.created (Caso inválido para cobertura)
+    await createdSub.topicHandler({ value: null });
+
+    // 3. Test handler de product.deleted (Caso exitoso)
+    const mockId = { id: "123" };
+    await deletedSub.topicHandler({ value: mockId });
+    expect(deleteStripeProduct).toHaveBeenCalledWith(mockId);
+
+    // 4. Test handler de product.deleted (Caso inválido para cobertura)
+    await deletedSub.topicHandler({ value: {} });
   });
 });

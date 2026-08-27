@@ -37,8 +37,7 @@ describe("stripeProducts Utility", () => {
       id: "stripe_prod_123",
     });
 
-    const product = { id: 1, name: "Test Product" };
-
+    const product = { id: 1, name: "Test Product", price: 10 };
     await createStripeProduct(product as any);
 
     expect(stripeMock.products.create).toHaveBeenCalledWith(
@@ -136,7 +135,7 @@ describe("stripeProducts Utility", () => {
     });
 
     await expect(getStripProductPrice("123")).rejects.toThrow(
-      "Product price not found: 123",
+      "Price not found for product: 123",
     );
   });
 
