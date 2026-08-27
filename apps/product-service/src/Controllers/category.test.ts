@@ -1,9 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+vi.mock("../Middleweare/AuthMiddleweare.js", () => ({
+  shouldBeUser: (req: any, res: any, next: any) => {
+    req.userId = "mock_user_123";
+    next();
+  },
+  shouldBeAdmin: (req: any, res: any, next: any) => next(),
+}));
 
-process.env.KAFKA_BROKER = "localhost:9092";
-process.env.CLERK_PUBLISHABLE_KEY = "pk_test_mock_12345";
-process.env.CLERK_SECRET_KEY = "sk_test_mock_12345";
-
+// Mockear Kafka
 vi.mock("../utils/kafka.js", () => ({
   producer: {
     connect: vi.fn(),
@@ -12,6 +16,12 @@ vi.mock("../utils/kafka.js", () => ({
   },
   kafka: {},
 }));
+
+// Setear variables de entorno básicas
+process.env.KAFKA_BROKER = "localhost:9092";
+process.env.CLERK_PUBLISHABLE_KEY =
+  "pk_test_dHVtb2llLXNoYXJrLTkxLmNsZXJrLmFjY291bnRzLmRldiQ";
+process.env.CLERK_SECRET_KEY = "sk_test_mocksecretkey1234567890";
 
 import request from "supertest";
 import { prisma } from "@repo/productdb";
