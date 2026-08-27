@@ -1,6 +1,21 @@
 import { vi, it, expect, describe, beforeEach, beforeAll } from "vitest";
 import app from "../index.js";
-
+// 1. Mock de la base de datos (Prisma / paymentdb)
+// Mock manual de Prisma (sin depender de vitest-mock-extended)
+vi.mock("@repo/paymentdb", () => ({
+  prisma: {
+    order: {
+      create: vi.fn().mockResolvedValue({ id: 1 }),
+      update: vi.fn().mockResolvedValue({ id: 1 }),
+      findUnique: vi.fn().mockResolvedValue(null),
+      findFirst: vi.fn().mockResolvedValue(null),
+    },
+    payment: {
+      create: vi.fn().mockResolvedValue({ id: 1 }),
+      update: vi.fn().mockResolvedValue({ id: 1 }),
+    },
+  },
+}));
 vi.mock("../utils/stripe.js", () => ({
   default: {
     webhooks: {
