@@ -1,4 +1,18 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+
+process.env.KAFKA_BROKER = "localhost:9092";
+process.env.CLERK_PUBLISHABLE_KEY = "pk_test_mock_12345";
+process.env.CLERK_SECRET_KEY = "sk_test_mock_12345";
+
+vi.mock("../utils/kafka.js", () => ({
+  producer: {
+    connect: vi.fn(),
+    send: vi.fn().mockResolvedValue(true),
+    disconnect: vi.fn(),
+  },
+  kafka: {},
+}));
+
 import request from "supertest";
 import { prisma } from "@repo/productdb";
 import { producer } from "../utils/kafka.js";
