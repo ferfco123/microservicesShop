@@ -1,3 +1,7 @@
+process.env.KAFKA_BROKER = "localhost:9092";
+process.env.STRIPE_WEBHOOK_SECRET = "whsec_test_secret";
+process.env.STRIPE_SECRET_KEY = "sk_test_mock";
+
 import { vi, it, expect, describe, beforeEach, beforeAll } from "vitest";
 import app from "../index.js";
 // 1. Mock de la base de datos (Prisma / paymentdb)
