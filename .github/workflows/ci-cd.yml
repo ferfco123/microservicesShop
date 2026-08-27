@@ -33,6 +33,7 @@ jobs:
           pnpm turbo run db:generate --continue || true
           pnpm --filter payment-service test -- --run
         env:
+          NODE_ENV: "test"
           KAFKA_BROKER: "localhost:9092"
           STRIPE_WEBHOOK_SECRET: "whsec_test_secret"
           STRIPE_SECRET_KEY: "sk_test_mock"
