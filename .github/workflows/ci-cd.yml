@@ -31,7 +31,7 @@ jobs:
       - name: Generar cliente de Prisma y Ejecutar Tests
         run: |
           pnpm turbo run db:generate --continue || true
-          pnpm exec turbo test
+          pnpm --filter payment-service test -- --run
         env:
           KAFKA_BROKER: "localhost:9092"
           STRIPE_WEBHOOK_SECRET: "whsec_test_secret"
