@@ -13,7 +13,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "clean": "node -e \"fs.rmSync('dist', { recursive: true, force: true })\""
+    "clean": "node -e \"fs.rmSync('dist', { recursive: true, force: true })\"",
+    "test": "echo \"No tests specified for orderdb\""
   },
   "dependencies": {
     "dotenv": "^16.0.3",
