@@ -2,9 +2,9 @@ name: CI_CD_Pipeline
 
 on:
   push:
-    branches: [ main, develop ] # Se ejecuta cada vez que subes código a estas ramas
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   # --- FASE 1: INTEGRACIÓN CONTINUA (CI) ---
@@ -14,23 +14,27 @@ jobs:
       - name: Checkout del código
         uses: actions/checkout@v4
 
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "pnpm"
 
       - name: Instalar dependencias
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
-      # Turbo detectará que 'test' depende de 'db:generate' gracias a tu turbo.json
       - name: Ejecutar Tests (Vitest + Prisma Generate)
-        run: npx turbo test
+        run: pnpm exec turbo test
 
   # --- FASE 2: DESPLIEGUE CONTINUO (CD) ---
   deploy:
-    needs: build-and-test # ⚠️ SOLO se ejecuta si los tests pasaron (están en verde)
-    if: github.ref == 'refs/heads/main' # Solo despliega si el push fue a la rama 'main'
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Desplegar en Oracle Cloud
@@ -40,7 +44,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.ORACLE_SSH_KEY }}
           script: |
-            cd ~/tu-carpeta-del-proyecto
+            cd ~/MicroservicesShop
             git pull origin main
-            docker-compose up -d --build
+            docker compose up -d --build
             echo "Despliegue exitoso 🚀"
