@@ -1,11 +1,11 @@
+// 1. Declarar variables de entorno PRIMERO QUE NADA
 process.env.KAFKA_BROKER = "localhost:9092";
 process.env.STRIPE_WEBHOOK_SECRET = "whsec_test_secret";
 process.env.STRIPE_SECRET_KEY = "sk_test_mock";
 
 import { vi, it, expect, describe, beforeEach, beforeAll } from "vitest";
-import app from "../index.js";
-// 1. Mock de la base de datos (Prisma / paymentdb)
-// Mock manual de Prisma (sin depender de vitest-mock-extended)
+
+// 2. Mocks de librerías externas antes de importar la app
 vi.mock("@repo/paymentdb", () => ({
   prisma: {
     order: {
@@ -20,21 +20,9 @@ vi.mock("@repo/paymentdb", () => ({
       update: vi.fn().mockResolvedValue({ id: 1 }),
       findUnique: vi.fn().mockResolvedValue(null),
     },
-    // Añadimos un Proxy genérico por si el controlador usa otro modelo o método
-    $transaction: vi.fn((callback) =>
-      callback({
-        order: {
-          create: vi.fn().mockResolvedValue({ id: 1 }),
-          update: vi.fn().mockResolvedValue({ id: 1 }),
-        },
-        payment: {
-          create: vi.fn().mockResolvedValue({ id: 1 }),
-          update: vi.fn().mockResolvedValue({ id: 1 }),
-        },
-      }),
-    ),
   },
 }));
+
 vi.mock("../utils/stripe.js", () => ({
   default: {
     webhooks: {
@@ -54,11 +42,10 @@ vi.mock("../utils/kafka.js", () => ({
   },
 }));
 
-describe("Stripe Webhooks Controller", () => {
-  beforeAll(() => {
-    process.env.STRIPE_WEBHOOK_SECRET = "whsec_test_secret";
-  });
+// 3. Importar la app después de configurar entorno y mocks
+import app from "../index.js";
 
+describe("Stripe Webhooks Controller", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.spyOn(console, "log").mockImplementation(() => {});
