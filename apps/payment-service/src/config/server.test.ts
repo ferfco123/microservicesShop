@@ -1,5 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 process.env.KAFKA_BROKER = "localhost:9092";
+process.env.STRIPE_SECRET_KEY = "sk_test_mock";
+process.env.STRIPE_WEBHOOK_SECRET = "whsec_mock";
 // Mockeamos el servidor HTTP para que no abra un puerto ni bloquee el proceso
 vi.mock("@hono/node-server", () => ({
   serve: vi.fn(),
